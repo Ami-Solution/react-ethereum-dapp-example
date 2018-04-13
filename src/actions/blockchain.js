@@ -1,6 +1,6 @@
 import * as types from './blockchain-types';
 import path from 'path';
-import fs from 'fs';
+import contractMetacoin from '../contracts/MetaCoin.json';
 
 export function setCoinbase(coinbase) {
   return {
@@ -46,8 +46,7 @@ export function loadContractABI(contractName) {
       // }
       // const contractName = req.url.split('/')[2];
       const filename = `${contractName}.json`;
-      const source = fs.readFileSync(path.join(__dirname, '../../build/contracts/', filename));
-      const JSONObject = JSON.parse(source);
+      const JSONObject = contractMetacoin;
       return resolve({
         abi: JSONObject.abi
       });
