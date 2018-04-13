@@ -1,4 +1,6 @@
 import * as types from './blockchain-types';
+import path from 'path';
+import fs from 'fs';
 
 export function setCoinbase(coinbase) {
   return {
@@ -33,4 +35,30 @@ export function setLatestBlockHash(latestBlockHash) {
     type: types.SET_LATEST_BLOCK_HASH,
     latestBlockHash
   };
+}
+
+export function loadContractABI(contractName) {
+  return function(dispatch) {
+    return new Promise((resolve, reject) => {
+      // if (typeof req.url === 'undefined' ||
+      //     req.url.split('/').length < 3) {
+      //   return reject(new Error('No contractName provided in request URL!'));
+      // }
+      // const contractName = req.url.split('/')[2];
+      const filename = `${contractName}.json`;
+      const source = fs.readFileSync(path.join(__dirname, '../../build/contracts/', filename));
+      const JSONObject = JSON.parse(source);
+      return resolve({
+        abi: JSONObject.abi
+      });
+      });
+  }
+  // return {
+
+    // types: [types.LOAD_CONTRACT_ABI, types.LOAD_CONTRACT_ABI_SUCCESS, types.LOAD_CONTRACT_ABI_FAIL],
+    // type: types.LOAD_CONTRACT_ABI,
+
+    // promise: ({ client }) =>
+    //   client.get(`/loadContractABI/${contractName}`)
+  // };
 }
