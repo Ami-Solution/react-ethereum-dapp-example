@@ -47,8 +47,12 @@ jobs:
           command: npm install -g truffle
           
       - run:
-          name: lerna init
-          command: lerna init
+          name: truffle init
+          command: truffle init
+          
+      - run:
+          name: truffle compile
+          command: truffle compile
           
       - run:
           name: Test Packages
